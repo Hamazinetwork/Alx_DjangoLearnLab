@@ -1,7 +1,21 @@
 from django.shortcuts import render
 from django.views.generic.detail import DetailView  
 from .models import Book
-from .models import Library   
+from .models import Library  
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.shortcuts import redirect
+
+class RegisterView(CreateView):
+    form_class = UserCreationForm
+    template_name = "relationship_app/register.html"
+    success_url = reverse_lazy("list_books")  # redirect after registration
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)  # log in the new user
+        return redirect(self.success_url)
 
 # Function-based view
 def list_books(request):
