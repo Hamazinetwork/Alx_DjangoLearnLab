@@ -32,6 +32,23 @@ def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
 
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  
+            return redirect("login") 
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/register.html", {"form": form})
+
+
+
+
+
 class Register(CreateView):
     form_class = UserCreationForm
     template_name = "relationship_app/register.html"
