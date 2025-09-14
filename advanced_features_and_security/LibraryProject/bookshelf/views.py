@@ -5,6 +5,10 @@ from .models import Book
 from django.db.models import Permission
 from django.http import HttpResponse
 from .forms import ExampleForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import BookForm
+from django.contrib.auth.decorators import login_required, permission_required
+
 
 @permission_required('bookshelf.can_view', raise_exception=True)
 def book_list(request):
@@ -37,3 +41,16 @@ def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     book.delete()
     return HttpResponse("You have permission")
+
+
+@login_required
+@permission_required("bookshelf.can_create", raise_exception=True)
+def create_book(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("book_list")
+    else:
+        form = BookForm()
+    return render(request, "bookshelf/form_example.html", {"form": form})

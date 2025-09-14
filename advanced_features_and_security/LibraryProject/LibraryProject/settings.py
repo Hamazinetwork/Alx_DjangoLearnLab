@@ -114,3 +114,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # advanced_features_and_security/settings.py
 AUTH_USER_MODEL = "bookshelf.CustomUser"
+
+
+# SECURITY (production)
+DEBUG = False  # set True only in development
+
+ALLOWED_HOSTS = ["yourdomain.com", "www.yourdomain.com", "localhost", "127.0.0.1"]
+
+# Secure cookies (these require HTTPS to be effective)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Browser protections
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
+
+# HSTS (enable only when you have HTTPS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# (Optional) Redirect HTTP to HTTPS - enable only in production behind HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Keep secret out of repo
+# SECRET_KEY = os.environ['DJANGO_SECRET_KEY']  # recommended
