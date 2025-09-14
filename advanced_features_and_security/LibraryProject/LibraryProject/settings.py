@@ -140,3 +140,9 @@ SECURE_SSL_REDIRECT = True
 
 # Keep secret out of repo
 # SECRET_KEY = os.environ['DJANGO_SECRET_KEY']  # recommended
+# Trust the X-Forwarded-Proto header set by the proxy (e.g. Heroku, Nginx)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
