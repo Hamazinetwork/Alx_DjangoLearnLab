@@ -2,6 +2,11 @@ from django.core.exceptions import ValidationError
 from django import forms
 from .models import Book, Author
 
+class ExampleForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields =['author','title','publication_year']
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
