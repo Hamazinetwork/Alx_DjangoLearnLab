@@ -16,7 +16,7 @@ class BookSerializer(serializers.ModelSerializer):
         return value
     
 
-    # AuthorSerializer nests BookSerializer under `books`, so whenever an Author
+# AuthorSerializer nests BookSerializer under `books`, so whenever an Author
 # is serialized, their books will appear inline.
 # Example:
 # {
