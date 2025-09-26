@@ -3,6 +3,7 @@ from rest_framework import generics, viewsets, permissions, filters
 from models import Book, Author
 from serializers import AuthorSerializer, BookSerializer
 from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework
 
 
 class AuthorListView(generics.ListAPIView):
