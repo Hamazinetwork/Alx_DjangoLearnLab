@@ -4,6 +4,7 @@ from models import Book, Author
 from serializers import AuthorSerializer, BookSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 
 class AuthorListView(generics.ListAPIView):
@@ -42,7 +43,7 @@ class AuthorDeleteView(generics.DestroyAPIView):
 class BookListView(generics.ListAPIView):
     queryset=Book.objects.all()
     Author_serializer=BookSerializer
-    permission_classes=[permissions.AllowAny]
+    permission_classes=[IsAuthenticatedOrReadOnly]
     filter_backends=[DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     Order_field=['title', 'publication_year']
     Search_field=['title', 'author__name']
@@ -51,12 +52,12 @@ class BookListView(generics.ListAPIView):
 class BookDetailView(generics.RetrieveAPIView):
     queryset=Book.objects.all()
     Author_serializer=BookSerializer
-    permission_classes=[permissions.AllowAny]
+    permission_classes=[IsAuthenticated]
 
 class BookCreateView(generics.CreateAPIView):
     queryset=Book.objects.all()
     Author_serializer=BookSerializer
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes=[IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -64,7 +65,7 @@ class BookCreateView(generics.CreateAPIView):
 class BookUpdateView(generics.UpdateAPIView):
     queryset=Book.objects.all()
     Author_serializer=BookSerializer
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes=[IsAuthenticated]
 
     def perform_update(self, serializer):
         serializer.save()
@@ -72,7 +73,7 @@ class BookUpdateView(generics.UpdateAPIView):
 class BookDeleteView(generics.DestroyAPIView):
     queryset=Book.objects.all()
     Author_serializer=BookSerializer
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes=[IsAuthenticated]
 
     #DOCUMENTATION
 # BookListView: Anyone can see all books (GET /books/)
