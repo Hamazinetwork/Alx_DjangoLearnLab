@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Profile</h2>
+
+
+<p>Username: {{ request.user.username }}</p>
+<p>Email: {{ request.user.email }}</p>
+
+
+<h3>Edit profile</h3>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ p_form.non_field_errors }}
+<div>
+<label>Bio</label>
+{{ p_form.bio }}
+</div>
+<div>
+<label>Avatar</label>
+{{ p_form.avatar }}
+</div>
+<button type="submit">Save</button>
+</form>
+
+
+<p><a href="{% url 'logout' %}">Logout</a></p>
+{% endblock %}
