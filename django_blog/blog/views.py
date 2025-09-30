@@ -89,7 +89,7 @@ class PostUpdateView(generics.UpdateAPIView):
     serializer_class=postserializer
     permission_classes= IsAuthenticatedOrReadOnly
 
-class PostDeletView(generics.DestroyAPIView):
+class PostDeleteView(generics.DestroyAPIView):
     queryset=Post.objects.all()
     serializer_class=postserializer
     permission_classes= IsAuthenticatedOrReadOnly
