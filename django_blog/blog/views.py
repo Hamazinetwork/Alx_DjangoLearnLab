@@ -4,6 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from rest_framework import generics, viewsets, permissions, filters
+from models import Post, Profile
+from serializers import postserializer, ProfileSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+
 
 
 from .forms import CustomUserCreationForm, ProfileForm
@@ -60,3 +67,29 @@ def profile(request):
     return render(request, 'registration/profile.html', {
     'p_form': p_form,
     })
+
+
+class PostListView(generics.ListAPIView):
+    queryset=Post.objects.all()
+    serializer_class=postserializer
+    permission_classes=IsAuthenticatedOrReadOnly
+
+class PostDetailView(generics.RetrieveAPIView):
+    queryset=Post.objects.all()
+    serializer_class=postserializer
+    permission_classes= IsAuthenticatedOrReadOnly
+
+class PostCreateView(generics.CreateAPIView):
+    queryset=Post.objects.all()
+    serializer_class=postserializer
+    permission_classes= IsAuthenticatedOrReadOnly
+
+class PostUpdateView(generics.UpdateAPIView):
+    queryset=Post.objects.all()
+    serializer_class=postserializer
+    permission_classes= IsAuthenticatedOrReadOnly
+
+class PostDeletView(generics.DestroyAPIView):
+    queryset=Post.objects.all()
+    serializer_class=postserializer
+    permission_classes= IsAuthenticatedOrReadOnly
