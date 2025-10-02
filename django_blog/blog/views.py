@@ -12,7 +12,7 @@ from django_filters import rest_framework
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
-
+from django.db.models import Q
 from .models import Post, Comment
 from .forms import CommentForm
 
@@ -140,3 +140,15 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.get_object().author == self.request.user
+
+def search_posts(request):
+    query = request.GET.get('q', '')
+    results = Post.objects.filter(   # <-- "Post.objects.filter"
+        Q(title__icontains=query) |  # <-- "title__icontains"
+        Q(content__icontains=query) |  # <-- "content__icontains"
+        Q(tags__name__icontains=query)  # <-- "tags__name__icontains"
+    ).distinct()
+    return render(request, 'blog/search_results.html', {
+        'query': query,
+        'results': results,
+    })
