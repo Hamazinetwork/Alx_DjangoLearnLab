@@ -8,11 +8,9 @@ from taggit.forms import TagWidget
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'body', 'tags']  # include tags
+        fields = ['title', 'body', 'tags']   # <-- contains "tags"
         widgets = {
-            'tags': TagWidget(attrs={
-                'placeholder': 'Add tags separated by commas'
-            }),
+            'tags': TagWidget(),             # <-- contains "TagWidget()"
         }
 
 
